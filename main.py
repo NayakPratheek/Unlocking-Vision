@@ -5,22 +5,21 @@ import google.generativeai as genai
 from PIL import Image
 import streamlit as st
 
-
-
+# Configure the Streamlit interface
 st.set_page_config(layout="wide")
-# st.image('opencv hand landmarks.png')
 
+# Layout: two columns for displaying video feed and AI response
+col1, col2 = st.columns([2, 1])
 
-col1, col2 = st.columns([2,1])
+# Column 1: Video feed and Run checkbox
 with col1:
     run = st.checkbox('Run', value=True)
     FRAME_WINDOW = st.image([])
 
+# Column 2: AI Response
 with col2:
     output_text_area = st.title("Answer")
     output_text_area = st.subheader("")
-
-
 
 # Configure Gemini AI with the provided API key
 genai.configure(api_key="AIzaSyDIvahoFu6sUfFJc7I4z7VLD9-GSUECZ3M")
@@ -28,11 +27,12 @@ model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Initialize the webcam to capture video
 cap = cv2.VideoCapture(0)
-cap.set(3,1200)
-cap.set(4,720)
+cap.set(3, 1200)  # Set the width of the video capture
+cap.set(4, 720)  # Set the height of the video capture
 
 # Initialize the HandDetector class with the given parameters
 detector = HandDetector(staticMode=False, maxHands=1, modelComplexity=1, detectionCon=0.7, minTrackCon=0.5)
+
 
 def getHandInfo(img):
     # Find hands in the current frame
@@ -46,7 +46,7 @@ def getHandInfo(img):
     else:
         return None
 
-# Drawing function
+
 def draw(canvas, info, prev_pos):
     fingers, lmList = info
     current_position = None
@@ -57,17 +57,19 @@ def draw(canvas, info, prev_pos):
             # Draw a line from the previous position to the current position
             cv2.line(canvas, prev_pos, current_position, (255, 255, 0), 5)
         prev_pos = current_position  # Update the previous position to the current one
-    elif fingers == [1, 0, 0, 0, 1]:  # Only thumb up
+    elif fingers == [1, 0, 0, 0, 0]:  # Thumb up
         canvas = np.zeros_like(canvas)  # Reset the canvas to a blank image
 
     return current_position, canvas
 
-# Sending request to Gemini AI
+
 def sendToAi(model, canvas, fingers):
     if fingers == [1, 1, 0, 0, 1]:  # Specific gesture (thumb, index, and pinky up)
-        pil_image = Image.fromarray(cv2.cvtColor(canvas, cv2.COLOR_BGR2RGB))  # Convert canvas to RGB and then to PIL Image
+        pil_image = Image.fromarray(
+            cv2.cvtColor(canvas, cv2.COLOR_BGR2RGB))  # Convert canvas to RGB and then to PIL Image
         response = model.generate_content(["Solve", pil_image])  # Send the canvas image to Gemini AI
-        return response.text  # Print the response text (modify as needed to handle AI response)
+        return response.text  # Return the AI response text
+
 
 prev_pos = None
 canvas = None
@@ -87,7 +89,6 @@ while True:
 
     if info:
         fingers, lmList = info
-        # print(fingers)
         prev_pos, canvas = draw(canvas, info, prev_pos)  # Update the canvas and previous position
         output_text = sendToAi(model, canvas, fingers)  # Send to AI based on specific gesture
 
@@ -97,10 +98,6 @@ while True:
 
     if output_text:
         output_text_area.text(output_text)
-
-    # Display the combined image and the canvas
-    # cv2.imshow("Image", combined_img)
-    # cv2.imshow("Canvas", canvas)
 
     # Check for 'q' key to exit
     if cv2.waitKey(1) & 0xFF == ord('q'):
