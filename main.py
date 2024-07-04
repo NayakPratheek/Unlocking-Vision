@@ -13,7 +13,7 @@ col1, col2 = st.columns([2, 1])
 
 # Column 1: Video feed and Run checkbox
 with col1:
-    run = st.checkbox('Run', value=True)
+    # run = st.checkbox('Run', value=True)
     FRAME_WINDOW = st.image([])
 
 # Column 2: AI Response
@@ -22,12 +22,12 @@ with col2:
     output_text_area = st.subheader("")
 
 # Configure Gemini AI with the provided API key
-genai.configure(api_key="AIzaSyDhgVbn5_b2fTzLlWC3KznXrRVMd1zJNI0")
+genai.configure(api_key="AIzaSyDIvahoFu6sUfFJc7I4z7VLD9-GSUECZ3M")
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Initialize the webcam to capture video
 cap = cv2.VideoCapture(0)
-cap.set(3, 1200)  # Set the width of the video capture
+cap.set(3, 1080)  # Set the width of the video capture
 cap.set(4, 720)  # Set the height of the video capture
 
 # Initialize the HandDetector class with the given parameters
