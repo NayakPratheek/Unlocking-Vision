@@ -9,7 +9,7 @@ import streamlit as st
 st.set_page_config(layout="wide")
 
 # Layout: two columns for displaying video feed and AI response
-col1, col2 = st.columns([2, 1])
+col1, col2 = st.columns([1, 1])
 
 # Column 1: Video feed and Run checkbox
 with col1:
@@ -22,7 +22,7 @@ with col2:
     output_text_area = st.subheader("")
 
 # Configure Gemini AI with the provided API key
-genai.configure(api_key="AIzaSyDIvahoFu6sUfFJc7I4z7VLD9-GSUECZ3M")
+genai.configure(api_key="AIzaSyCE_NGbmP9kWVoOlyDJH8ftCxzEU3C-dNw")
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Initialize the webcam to capture video
