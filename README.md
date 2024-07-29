@@ -1,5 +1,5 @@
 
-# "Unlocking Vision", Solving Real-World Challenges with OpenCV and AI
+# "Unlocking Vision", Solving Real-Time Challenges with OpenCV and AI
 
 Welcome to the "Unlocking Vision" project! This repository features AirCanvas, a revolutionary interface integrated with Gemini AI, allowing users to write in the air and receive instant solutions to their problems. Combining the power of computer vision and advanced AI, AirCanvas transforms your gestures and writings into actionable insights.
 
