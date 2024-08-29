@@ -55,9 +55,6 @@ To run tests, run the following command
 
 
 
-## Screenshots
-![Screenshot 2024-07-21 153619](https://github.com/user-attachments/assets/5446a769-b0fd-4f08-874f-f656af29703e)
-![Screenshot 2024-07-21 153640](https://github.com/user-attachments/assets/b1185606-248d-4cb9-8b10-031519079eda)
 
 
 
